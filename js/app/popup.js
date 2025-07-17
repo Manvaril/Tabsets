@@ -1,12 +1,3 @@
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-5243256-6']);
-_gaq.push(['_trackPageview']);
-
-(function () {
-	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	ga.src = 'https://ssl.google-analytics.com/ga.js';
-	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
 
 myApp.controller('TabsetsController', function ($scope) {
 	'use strict';
@@ -50,7 +41,6 @@ myApp.controller('TabsetsController', function ($scope) {
 		chrome.storage.sync.set(obj, function () {
 			var error = chrome.runtime.lastError;
 			if (error) {
-				_gaq.push(['_trackEvent', 'Tabset', 'Error', error.message]);
 				window.alert(error.message);
 			}
 		});
@@ -86,7 +76,6 @@ myApp.controller('TabsetsController', function ($scope) {
 			$scope.$apply();
 
 			storeTabsets($scope.tabsets);
-			_gaq.push(['_trackEvent', 'Tabset', 'Created']);
 		});
 	};
 
@@ -107,7 +96,6 @@ myApp.controller('TabsetsController', function ($scope) {
 			}
 			storeTabsets($scope.tabsets);
 
-			_gaq.push(['_trackEvent', 'Tabset', 'Deleted']);
 		}
 	};
 
@@ -121,7 +109,6 @@ myApp.controller('TabsetsController', function ($scope) {
 
 			tabset.name = result;
 			storeTabsets($scope.tabsets);
-			_gaq.push(['_trackEvent', 'Tabset', 'Renamed']);
 		}
 	};
 
@@ -136,7 +123,6 @@ myApp.controller('TabsetsController', function ($scope) {
 		}
 
 		$scope.exportedTabset = JSON.stringify(temp);
-		_gaq.push(['_trackEvent', 'Tabset', 'Exported']);
 	};
 
 	$scope.exportDone = function (tabset) {
@@ -171,7 +157,6 @@ myApp.controller('TabsetsController', function ($scope) {
 
 			$scope.importedTabset = '';
 			$scope.importing = false;
-			_gaq.push(['_trackEvent', 'Tabset', 'Imported']);
 		} catch (e) {
 			alert("Sorry, that tabset text doesn\'t appear to be correctly formatted.");
 		}
@@ -190,7 +175,6 @@ myApp.controller('TabsetsController', function ($scope) {
 			});
 
 			$scope.exportedTabset = JSON.stringify(allTabsets);
-			_gaq.push(['_trackEvent', 'Tabset', 'ExportAllTabsets']);
 		} catch (e) {
 			alert("Sorry, that tabset text doesn\'t appear to be correctly formatted.");
 		}
@@ -209,7 +193,6 @@ myApp.controller('TabsetsController', function ($scope) {
 				chrome.tabs.remove(tabs[0].id);
 			}
 
-			_gaq.push(['_trackEvent', 'Tabset', 'Opened']);
 			window.close();
 		});
 	};
@@ -232,7 +215,6 @@ myApp.controller('TabsetsController', function ($scope) {
 
 				$scope.$apply();
 				storeTabsets($scope.tabsets);
-				_gaq.push(['_trackEvent', 'Tabset', 'TabAdded']);
 			} else {
 				alert('Oops, I could not find an active tab. Please try again.');
 			}
@@ -255,7 +237,6 @@ myApp.controller('TabsetsController', function ($scope) {
 			tabset.tabs.splice(spliceIndex, 1);
 			tabset.tabs.splice(spliceIndex - 1, 0, tab);
 			storeTabsets($scope.tabsets);
-			_gaq.push(['_trackEvent', 'Tabset', 'TabMoved']);
 		}
 	};
 
@@ -275,7 +256,6 @@ myApp.controller('TabsetsController', function ($scope) {
 			tabset.tabs.splice(spliceIndex, 1);
 			tabset.tabs.splice(spliceIndex + 1, 0, tab);
 			storeTabsets($scope.tabsets);
-			_gaq.push(['_trackEvent', 'Tabset', 'TabMoved']);
 		}
 	};
 
@@ -290,7 +270,6 @@ myApp.controller('TabsetsController', function ($scope) {
 		tabset.tabs.splice(spliceIndex, 1);
 
 		storeTabsets($scope.tabsets);
-		_gaq.push(['_trackEvent', 'Tabset', 'TabRemoved']);
 	};
 
 	$scope.sortByName = function () {
@@ -299,7 +278,6 @@ myApp.controller('TabsetsController', function ($scope) {
 		});
 
 		storeTabsets($scope.tabsets);
-		_gaq.push(['_trackEvent', 'Tabset', 'TabRemoved']);
 	};
 
 	$scope.sortByDate = function () {
@@ -308,11 +286,9 @@ myApp.controller('TabsetsController', function ($scope) {
 		});
 
 		storeTabsets($scope.tabsets);
-		_gaq.push(['_trackEvent', 'Tabset', 'TabRemoved']);
 	};
 
 	$scope.openUrl = function (url) {
 		chrome.tabs.create({ url: url, active: true });
-		_gaq.push(['_trackEvent', 'Tabset', 'OpenUrl_' + url]);
 	};
 });
